@@ -79,64 +79,90 @@ showDashboard();
 // Load Bookings
 // ---------------------------
 
-window.loadBookings=async function(){
+window.loadBookings = async function () {
 
-const bookingList=document.getElementById("bookingList");
+    const table = document.getElementById("bookingTable");
 
-bookingList.innerHTML="Loading...";
+    table.innerHTML = "";
 
-const snapshot=await getDocs(collection(db,"bookings"));
+    const snapshot = await getDocs(collection(db, "bookings"));
 
-let html="";
+    snapshot.forEach((bookingDoc) => {
 
-snapshot.forEach((documentData)=>{
+        const booking = bookingDoc.data();
 
-const booking=documentData.data();
+        table.innerHTML += `
 
-html+=`
+<tr>
 
-<div class="bookingCard">
+<td>${booking.name}</td>
 
-<h4>${booking.service}</h4>
+<td>
+<a href="tel:${booking.mobile}">
+${booking.mobile}
+</a>
+</td>
 
-<p><b>Name:</b> ${booking.name}</p>
+<td>${booking.service}</td>
 
-<p><b>Mobile:</b> ${booking.mobile}</p>
+<td>${booking.date}</td>
 
-<p><b>Address:</b> ${booking.address}</p>
+<td>${booking.time}</td>
 
-<p><b>Status:</b> ${booking.status}</p>
+<td>
 
-<div class="bookingActions">
+<span class="status ${booking.status.toLowerCase()}">
+
+${booking.status}
+
+</span>
+
+</td>
+
+<td>
 
 <button class="acceptBtn"
-onclick="updateStatus('${documentData.id}','Accepted')">
+onclick="updateStatus('${bookingDoc.id}','Accepted')">
 
 Accept
 
 </button>
 
 <button class="rejectBtn"
-onclick="updateStatus('${documentData.id}','Rejected')">
+onclick="updateStatus('${bookingDoc.id}','Rejected')">
 
 Reject
 
 </button>
 
 <button class="completeBtn"
-onclick="updateStatus('${documentData.id}','Completed')">
+onclick="updateStatus('${bookingDoc.id}','Completed')">
 
-Completed
+Complete
 
 </button>
 
-</div>
+<a
+href="https://wa.me/91${booking.mobile}"
+target="_blank">
 
-</div>
+<button class="acceptBtn">
+
+WhatsApp
+
+</button>
+
+</a>
+
+</td>
+
+</tr>
 
 `;
 
-});
+    });
+
+}
 
 bookingList.innerHTML=html;
 
