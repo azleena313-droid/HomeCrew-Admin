@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Home Crew Admin</title>
+
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
+
+<meta name="theme-color" content="#0d6efd">
+
+</head>
+
+<body>
+
+<!-- ========================= -->
+<!-- ADMIN LOGIN -->
+<!-- ========================= -->
+
+<section id="adminLogin" class="screen active">
+
+<div class="card">
+
+<h1>🏠 Home Crew Admin</h1>
+
+<h3>Administrator Login</h3>
+
+<input
+type="text"
+id="adminUser"
+placeholder="Username">
+
+<input
+type="password"
+id="adminPass"
+placeholder="Password">
+
+<button onclick="adminLogin()">
+Login
+</button>
+
+</div>
+
+</section>
+
+<!-- ========================= -->
+<!-- ADMIN DASHBOARD -->
+<!-- ========================= -->
+
+<section id="adminDashboard" class="screen">
+
+<div class="card">
+
+<h2>Admin Dashboard</h2>
+
+<div class="dashboardButtons">
+
+<button onclick="loadBookings()">
+📋 View All Bookings
+</button>
+
+<button onclick="loadComplaints()">
+💬 View Complaints
+</button>
+
+<button onclick="adminLogout()">
+🚪 Logout
+</button>
+
+</div>
+
+<hr>
+
+<h3>Bookings</h3>
+
+<div id="bookingList">
+
+Loading...
+
+</div>
+
+<hr>
+
+<h3>Complaints</h3>
+
+<div id="complaintList">
+
+No complaints
+
+</div>
+
+</div>
+
+</section>
+
+<script type="module" src="script.js"></script>
+
+</body>
+</html>
