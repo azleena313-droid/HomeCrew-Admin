@@ -342,3 +342,76 @@ button{
 button:hover{
     opacity:.9;
 }
+/* ==========================
+   SIDEBAR LAYOUT
+========================== */
+
+.layout{
+    display:flex;
+    min-height:100vh;
+}
+
+.sidebar{
+    width:250px;
+    background:#0f172a;
+    color:#fff;
+    padding:25px 20px;
+    position:fixed;
+    top:0;
+    left:0;
+    bottom:0;
+    overflow-y:auto;
+}
+
+.sidebar h2{
+    text-align:center;
+    margin-bottom:35px;
+}
+
+.sidebar ul{
+    list-style:none;
+    padding:0;
+}
+
+.sidebar ul li{
+    margin:15px 0;
+}
+
+.sidebar ul li a{
+    display:block;
+    color:#fff;
+    text-decoration:none;
+    padding:12px 15px;
+    border-radius:10px;
+    transition:.3s;
+}
+
+.sidebar ul li a:hover{
+    background:#2563eb;
+}
+
+.mainContent{
+    margin-left:250px;
+    width:calc(100% - 250px);
+    background:#f5f7fb;
+    min-height:100vh;
+}
+
+@media(max-width:900px){
+
+.sidebar{
+    position:relative;
+    width:100%;
+    height:auto;
+}
+
+.mainContent{
+    margin-left:0;
+    width:100%;
+}
+
+.layout{
+    display:block;
+}
+
+}
