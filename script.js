@@ -263,3 +263,33 @@ html+=`
 complaintList.innerHTML=html;
 
 }
+function filterBookings() {
+
+    const search = document
+        .getElementById("searchBox")
+        .value
+        .toLowerCase();
+
+    const selectedDate = document
+        .getElementById("dateFilter")
+        .value;
+
+    const rows = document.querySelectorAll("#bookingTable tr");
+
+    rows.forEach(row => {
+
+        const text = row.innerText.toLowerCase();
+
+        let show = true;
+
+        if (search !== "" && !text.includes(search))
+            show = false;
+
+        if (selectedDate !== "" && !text.includes(selectedDate))
+            show = false;
+
+        row.style.display = show ? "" : "none";
+
+    });
+
+}
