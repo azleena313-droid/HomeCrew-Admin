@@ -1,28 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Home Crew Admin</title>
-
-<link rel="stylesheet" href="style.css">
-
-</head>
 <body>
+
+<!-- ========================= -->
+<!-- ADMIN LOGIN -->
+<!-- ========================= -->
 
 <div id="adminLogin" class="login-page">
 
-    <!-- Login form here -->
-
-</div>
-
-<div class="layout" id="adminDashboard" style="display:none;">
-
-    <!-- Sidebar -->
-    <!-- Header -->
-    <!-- Dashboard -->
+    <div class="login-box">
 
         <h2>🏠 HomeCrew Admin</h2>
 
@@ -45,101 +29,139 @@
     </div>
 
 </div>
-<aside class="sidebar">
 
-<h2>🏠 HomeCrew</h2>
+<!-- ========================= -->
+<!-- ADMIN DASHBOARD -->
+<!-- ========================= -->
 
-<ul>
-<li><a href="#">📊 Dashboard</a></li>
-<li><a href="#">📋 Bookings</a></li>
-<li><a href="#">💬 Complaints</a></li>
-<li><a href="#">👥 Customers</a></li>
-<li><a href="#">👨‍🔧 Workers</a></li>
-<li><a href="#">⭐ Reviews</a></li>
-<li><a href="#">⚙ Settings</a></li>
-<li><a href="#" onclick="adminLogout()">🚪 Logout</a></li>
-</ul>
+<div class="layout" id="adminDashboard" style="display:none;">
 
-</aside>
+    <!-- Sidebar -->
 
-<div class="mainContent">
+    <aside class="sidebar">
 
-<!-- Header -->
-<header class="header">
+        <h2>🏠 HomeCrew</h2>
 
-<div class="logo">
-🏠 HOME CREW ADMIN
-</div>
+        <ul>
 
-<div class="header-right">
+            <li><a href="#">📊 Dashboard</a></li>
 
-<span id="adminName">
-Administrator
-</span>
+            <li><a href="#">📋 Bookings</a></li>
 
-<button onclick="adminLogout()">
-Logout
-</button>
+            <li><a href="#">💬 Complaints</a></li>
 
-</div>
+            <li><a href="#">👥 Customers</a></li>
 
-</header>
+            <li><a href="#">👨‍🔧 Workers</a></li>
 
-<!-- Dashboard -->
+            <li><a href="#">⭐ Reviews</a></li>
 
-<div class="container">
+            <li><a href="#">⚙ Settings</a></li>
 
-<!-- Statistics -->
+            <li>
+                <a href="#" onclick="adminLogout()">
+                    🚪 Logout
+                </a>
+            </li>
 
-<div class="stats">
+        </ul>
+
+    </aside>
+
+    <!-- Main Content -->
+
+    <div class="mainContent">
+
+        <!-- Header -->
+
+        <header class="header">
+
+            <div class="logo">
+                🏠 HOME CREW ADMIN
+            </div>
+
+            <div class="header-right">
+
+                <span id="adminName">
+                    Administrator
+                </span>
+
+                <button onclick="adminLogout()">
+                    Logout
+                </button>
+
+            </div>
+
+        </header>
+
+        <!-- Dashboard -->
+
+        <div class="container">
+
+            <!-- Statistics -->
+
+            <div class="stats">
+                <!-- Total Bookings -->
 
 <div class="card">
-<h2 id="totalBookings">0</h2>
-<p>Total Bookings</p>
+    <h2 id="totalBookings">0</h2>
+    <p>Total Bookings</p>
 </div>
+
+<!-- Pending -->
 
 <div class="card">
-<h2 id="pendingBookings">0</h2>
-<p>Pending</p>
+    <h2 id="pendingBookings">0</h2>
+    <p>Pending</p>
 </div>
+
+<!-- Accepted -->
 
 <div class="card">
-<h2 id="acceptedBookings">0</h2>
-<p>Accepted</p>
+    <h2 id="acceptedBookings">0</h2>
+    <p>Accepted</p>
 </div>
+
+<!-- Completed -->
 
 <div class="card">
-<h2 id="completedBookings">0</h2>
-<p>Completed</p>
+    <h2 id="completedBookings">0</h2>
+    <p>Completed</p>
 </div>
+
+<!-- Rejected -->
 
 <div class="card">
-<h2 id="rejectedBookings">0</h2>
-<p>Rejected</p>
+    <h2 id="rejectedBookings">0</h2>
+    <p>Rejected</p>
 </div>
 
 </div>
 
-<!-- Search -->
+<!-- ========================= -->
+<!-- SEARCH BAR -->
+<!-- ========================= -->
 
 <div class="toolbar">
 
-<input
-type="text"
-id="searchBox"
-placeholder="Search customer, mobile or service...">
+    <input
+        type="text"
+        id="searchBox"
+        placeholder="Search customer, mobile or service...">
 
-<input
-type="date"
-id="dateFilter">
+    <input
+        type="date"
+        id="dateFilter">
 
-<button onclick="loadBookings()">
-Refresh
-</button>
+    <button onclick="loadBookings()">
+        🔄 Refresh
+    </button>
 
 </div>
 
-<!-- Bookings -->
+<!-- ========================= -->
+<!-- BOOKINGS TABLE -->
+<!-- ========================= -->
 
 <div class="table-container">
 
@@ -162,32 +184,33 @@ Refresh
 </thead>
 
 <tbody id="bookingTable">
-
-</tbody>
+    </tbody>
 
 </table>
 
 </div>
 
-<!-- Complaints -->
+<!-- ========================= -->
+<!-- CUSTOMER COMPLAINTS -->
+<!-- ========================= -->
 
 <h2 class="title">
-Customer Complaints
+    Customer Complaints
 </h2>
 
 <div id="complaintList">
 
-Loading...
+    Loading...
 
 </div>
 
-</div>
+</div> <!-- End .container -->
+
+</div> <!-- End .mainContent -->
+
+</div> <!-- End .layout -->
 
 <script type="module" src="script.js"></script>
-
-</div>
-
-</div>
 
 </body>
 </html>
