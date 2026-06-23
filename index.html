@@ -1,33 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HomeCrew Admin</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
 <body>
 
 <!-- ========================= -->
-<!-- ADMIN LOGIN -->
+<!-- LOGIN PAGE -->
 <!-- ========================= -->
 
 <div id="adminLogin" class="login-page">
 
- <div class="login-box">
+<div class="login-card">
 
-    <img src="logo.PNG" alt="HomeCrew Logo" class="login-logo">
+<img
+src="logo.png"
+class="login-logo"
+alt="HomeCrew Logo">
 
-    <h2>🏠 HomeCrew Admin</h2>
-        <input
-            type="text"
-            id="adminUsername"
-            placeholder="Username">
+<h1>HomeCrew Admin</h1>
 
-        <input
-            type="password"
-            id="adminPassword"
-            placeholder="Password">
+<p class="subtitle">
+Professional Home Services Management
+</p>
 
-        <button onclick="adminLogin()">
-            Login
-        </button>
+<div class="input-group">
 
-        <p id="loginError"></p>
+<label>Username</label>
 
-    </div>
+<input
+type="text"
+id="adminUsername"
+placeholder="Enter username">
+
+</div>
+
+<div class="input-group">
+
+<label>Password</label>
+
+<input
+type="password"
+id="adminPassword"
+placeholder="Enter password">
+
+</div>
+
+<p id="loginError"></p>
+
+<button
+class="loginBtn"
+onclick="adminLogin()">
+
+Login
+
+</button>
+
+</div>
 
 </div>
 
@@ -35,102 +79,102 @@
 <!-- ADMIN DASHBOARD -->
 <!-- ========================= -->
 
-<div class="layout" id="adminDashboard" style="display:none;">
+<div
+id="adminDashboard"
+class="layout"
+style="display:none;">
 
-    <!-- Sidebar -->
+<!-- Sidebar -->
 
-    <aside class="sidebar">
+<aside class="sidebar">
 
-        <h2>🏠 HomeCrew</h2>
+<h2>🏠 HomeCrew</h2>
 
-        <ul>
+<ul>
 
-            <li><a href="#">📊 Dashboard</a></li>
+<li><a href="#">📊 Dashboard</a></li>
 
-            <li><a href="#">📋 Bookings</a></li>
+<li><a href="#">📋 Bookings</a></li>
 
-            <li><a href="#">💬 Complaints</a></li>
+<li><a href="#">👥 Customers</a></li>
 
-            <li><a href="#">👥 Customers</a></li>
+<li><a href="#">👨‍🔧 Workers</a></li>
 
-            <li><a href="#">👨‍🔧 Workers</a></li>
+<li><a href="#">💬 Complaints</a></li>
 
-            <li><a href="#">⭐ Reviews</a></li>
+<li><a href="#">⭐ Reviews</a></li>
 
-            <li><a href="#">⚙ Settings</a></li>
+<li><a href="#">📈 Reports</a></li>
 
-            <li>
-                <a href="#" onclick="adminLogout()">
-                    🚪 Logout
-                </a>
-            </li>
+<li><a href="#">⚙ Settings</a></li>
 
-        </ul>
+<li>
 
-    </aside>
+<a href="#"
+onclick="adminLogout()">
 
-    <!-- Main Content -->
+🚪 Logout
 
-    <div class="mainContent">
+</a>
 
-        <!-- Header -->
+</li>
 
-        <header class="header">
+</ul>
 
-            <div class="logo">
-                🏠 HOME CREW ADMIN
-            </div>
+</aside>
 
-            <div class="header-right">
+<div class="mainContent">
 
-                <span id="adminName">
-                    Administrator
-                </span>
+<header class="header">
 
-                <button onclick="adminLogout()">
-                    Logout
-                </button>
+<div class="logoTitle">
 
-            </div>
+🏠 HOMECREW ADMIN
 
-        </header>
+</div>
 
-        <!-- Dashboard -->
+<div class="adminInfo">
 
-        <div class="container">
+<span id="adminName">
 
-            <!-- Statistics -->
+Administrator
 
-            <div class="stats">
-                <!-- Total Bookings -->
+</span>
+
+<button onclick="adminLogout()">
+
+Logout
+
+</button>
+
+</div>
+
+</header>
+
+<div class="container">
+
+<div class="stats">
+ <!-- Statistics Cards -->
 
 <div class="card">
     <h2 id="totalBookings">0</h2>
     <p>Total Bookings</p>
 </div>
 
-<!-- Pending -->
-
 <div class="card">
     <h2 id="pendingBookings">0</h2>
     <p>Pending</p>
 </div>
-
-<!-- Accepted -->
 
 <div class="card">
     <h2 id="acceptedBookings">0</h2>
     <p>Accepted</p>
 </div>
 
-<!-- Completed -->
-
 <div class="card">
     <h2 id="completedBookings">0</h2>
     <p>Completed</p>
 </div>
-
-<!-- Rejected -->
 
 <div class="card">
     <h2 id="rejectedBookings">0</h2>
@@ -145,18 +189,22 @@
 
 <div class="toolbar">
 
-    <input
-        type="text"
-        id="searchBox"
-        placeholder="Search customer, mobile or service...">
+<input
+type="text"
+id="searchBox"
+placeholder="🔍 Search customer, mobile or service...">
 
-    <input
-        type="date"
-        id="dateFilter">
+<input
+type="date"
+id="dateFilter">
 
-    <button onclick="loadBookings()">
-        🔄 Refresh
-    </button>
+<button
+class="refreshBtn"
+onclick="loadBookings()">
+
+Refresh
+
+</button>
 
 </div>
 
@@ -173,11 +221,17 @@
 <tr>
 
 <th>Customer</th>
+
 <th>Mobile</th>
+
 <th>Service</th>
+
 <th>Date</th>
+
 <th>Time</th>
+
 <th>Status</th>
+
 <th>Actions</th>
 
 </tr>
@@ -185,7 +239,7 @@
 </thead>
 
 <tbody id="bookingTable">
-    </tbody>
+</tbody>
 
 </table>
 
@@ -195,23 +249,26 @@
 <!-- CUSTOMER COMPLAINTS -->
 <!-- ========================= -->
 
-<h2 class="title">
-    Customer Complaints
+<h2 class="section-title">
+
+Customer Complaints
+
 </h2>
 
-<div id="complaintList">
+<div id="complaintList" class="complaints-container">
 
-    Loading...
+Loading complaints...
 
 </div>
 
-</div> <!-- End .container -->
+</div> <!-- End Container -->
 
-</div> <!-- End .mainContent -->
+</div> <!-- End Main Content -->
 
-</div> <!-- End .layout -->
+</div> <!-- End Layout -->
 
 <script type="module" src="script.js"></script>
 
 </body>
-</html>
+
+</html> 
