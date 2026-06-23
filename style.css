@@ -1,0 +1,125 @@
+/* =======================================
+   HOME CREW ADMIN PANEL
+======================================= */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f4f6f9;
+padding:20px;
+}
+
+.screen{
+display:none;
+}
+
+.screen.active{
+display:block;
+}
+
+.card{
+background:#fff;
+max-width:700px;
+margin:auto;
+padding:25px;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,.15);
+}
+
+h1,h2,h3{
+text-align:center;
+margin-bottom:20px;
+color:#222;
+}
+
+input{
+width:100%;
+padding:14px;
+margin:10px 0;
+border:1px solid #ccc;
+border-radius:8px;
+font-size:16px;
+}
+
+button{
+width:100%;
+padding:14px;
+margin:8px 0;
+border:none;
+border-radius:8px;
+background:#0d6efd;
+color:white;
+font-size:16px;
+cursor:pointer;
+transition:.3s;
+}
+
+button:hover{
+background:#0b5ed7;
+}
+
+.dashboardButtons{
+display:grid;
+gap:12px;
+margin-bottom:20px;
+}
+
+.bookingCard{
+background:#f8f9fa;
+padding:15px;
+border-radius:10px;
+margin-bottom:15px;
+border-left:5px solid #0d6efd;
+}
+
+.bookingCard h4{
+margin-bottom:10px;
+}
+
+.bookingCard p{
+margin:5px 0;
+}
+
+.bookingActions{
+margin-top:15px;
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.acceptBtn{
+background:#198754;
+}
+
+.rejectBtn{
+background:#dc3545;
+}
+
+.completeBtn{
+background:#fd7e14;
+}
+
+.logoutBtn{
+background:#6c757d;
+}
+
+hr{
+margin:25px 0;
+}
+
+@media(max-width:600px){
+
+.card{
+padding:15px;
+}
+
+button{
+font-size:15px;
+}
+
+}
