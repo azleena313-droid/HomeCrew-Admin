@@ -34,12 +34,18 @@ alert("Invalid Login");
 // Dashboard
 // ---------------------------
 
-function showDashboard(){
+function showDashboard() {
 
-document.getElementById("adminLogin").classList.remove("active");
-document.getElementById("adminDashboard").classList.add("active");
+    document.getElementById("adminLogin").classList.remove("active");
+    document.getElementById("adminDashboard").classList.add("active");
 
-loadBookings();
+    loadBookings();
+
+    loadComplaints();
+
+    updateDashboardStats();
+
+}
 
 }
 
@@ -153,7 +159,51 @@ alert("Updated Successfully");
 loadBookings();
 
 }
+async function updateDashboardStats() {
 
+    const snapshot = await getDocs(collection(db, "bookings"));
+
+    let total = 0;
+    let pending = 0;
+    let accepted = 0;
+    let completed = 0;
+    let rejected = 0;
+
+    snapshot.forEach((doc) => {
+
+        total++;
+
+        const booking = doc.data();
+
+        switch (booking.status) {
+
+            case "Pending":
+                pending++;
+                break;
+
+            case "Accepted":
+                accepted++;
+                break;
+
+            case "Completed":
+                completed++;
+                break;
+
+            case "Rejected":
+                rejected++;
+                break;
+
+        }
+
+    });
+
+    document.getElementById("totalBookings").textContent = total;
+    document.getElementById("pendingBookings").textContent = pending;
+    document.getElementById("acceptedBookings").textContent = accepted;
+    document.getElementById("completedBookings").textContent = completed;
+    document.getElementById("rejectedBookings").textContent = rejected;
+
+}
 // ---------------------------
 // Complaints
 // ---------------------------
