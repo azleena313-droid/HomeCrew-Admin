@@ -296,3 +296,30 @@ function filterBookings() {
     });
 
 }
+// ===============================
+// ADMIN LOGIN
+// ===============================
+
+window.adminLogin = function () {
+
+    const username = document.getElementById("adminUsername").value.trim();
+    const password = document.getElementById("adminPassword").value.trim();
+
+    if (username === "admin" && password === "1234") {
+
+        document.getElementById("adminLogin").style.display = "none";
+
+        document.getElementById("adminDashboard").style.display = "flex";
+
+        loadBookings();
+        loadComplaints();
+        updateDashboardStats();
+
+    } else {
+
+        document.getElementById("loginError").innerHTML =
+            "❌ Invalid Username or Password";
+
+    }
+
+}
