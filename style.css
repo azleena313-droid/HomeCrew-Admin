@@ -473,3 +473,9 @@ button:hover{
     margin-top:15px;
     font-weight:bold;
 }
+.login-logo{
+    width:100px;
+    height:100px;
+    object-fit:contain;
+    margin-bottom:20px;
+}
