@@ -1,89 +1,94 @@
+// ==========================================
+// HOMECREW ADMIN V2.0
+// PART 1
+// ==========================================
+
 import { db } from "./firebase.js";
 
 import {
-collection,
-getDocs,
-doc,
-updateDoc
+    collection,
+    getDocs,
+    doc,
+    updateDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// ---------------------------
-// Admin Login
-// ---------------------------
+// ==========================================
+// LOGIN
+// ==========================================
 
-window.adminLogin = function(){
+window.adminLogin = async function () {
 
-const username = document.getElementById("adminUser").value;
-const password = document.getElementById("adminPass").value;
+    const username = document
+        .getElementById("adminUsername")
+        .value
+        .trim();
 
-if(username==="admin" && password==="1234"){
+    const password = document
+        .getElementById("adminPassword")
+        .value
+        .trim();
 
-localStorage.setItem("adminLoggedIn","true");
+    if (username === "admin" && password === "1234") {
 
-showDashboard();
+        localStorage.setItem("adminLoggedIn", "true");
 
-}else{
+        document.getElementById("adminLogin").style.display = "none";
 
-alert("Invalid Login");
+        document.getElementById("adminDashboard").style.display = "flex";
 
-}
+        await loadBookings();
+        await loadComplaints();
+        await updateDashboardStats();
 
-}
+    } else {
 
-// ---------------------------
-// Dashboard
-// ---------------------------
+        document.getElementById("loginError").textContent =
+            "Invalid username or password.";
 
-function showDashboard() {
+    }
 
-    document.getElementById("adminLogin").classList.remove("active");
-    document.getElementById("adminDashboard").classList.add("active");
+};
 
-    loadBookings();
+// ==========================================
+// LOGOUT
+// ==========================================
 
-    loadComplaints();
+window.adminLogout = function () {
 
-    updateDashboardStats();
+    localStorage.removeItem("adminLoggedIn");
 
-}
+    location.reload();
 
-}
+};
 
-// ---------------------------
-// Logout
-// ---------------------------
+// ==========================================
+// AUTO LOGIN
+// ==========================================
 
-window.adminLogout=function(){
+window.onload = async function () {
 
-localStorage.removeItem("adminLoggedIn");
+    if (localStorage.getItem("adminLoggedIn") === "true") {
 
-location.reload();
+        document.getElementById("adminLogin").style.display = "none";
 
-}
+        document.getElementById("adminDashboard").style.display = "flex";
 
-// ---------------------------
-// Auto Login
-// ---------------------------
+        await loadBookings();
+        await loadComplaints();
+        await updateDashboardStats();
 
-window.onload=function(){
+    }
 
-if(localStorage.getItem("adminLoggedIn")=="true"){
-
-showDashboard();
-
-}
-
-}
-
-// ---------------------------
-// Load Bookings
-// ---------------------------
+};
+// ==========================================
+// LOAD BOOKINGS
+// ==========================================
 
 window.loadBookings = async function () {
 
-    const table = document.getElementById("bookingTable");
+    const bookingTable = document.getElementById("bookingTable");
 
-    table.innerHTML = "";
+    bookingTable.innerHTML = "";
 
     const snapshot = await getDocs(collection(db, "bookings"));
 
@@ -91,29 +96,31 @@ window.loadBookings = async function () {
 
         const booking = bookingDoc.data();
 
-        table.innerHTML += `
+        const status = booking.status || "Pending";
+
+        bookingTable.innerHTML += `
 
 <tr>
 
-<td>${booking.name}</td>
+<td>${booking.name || ""}</td>
 
 <td>
-<a href="tel:${booking.mobile}">
-${booking.mobile}
+<a href="tel:${booking.mobile || ""}">
+${booking.mobile || ""}
 </a>
 </td>
 
-<td>${booking.service}</td>
+<td>${booking.service || ""}</td>
 
-<td>${booking.date}</td>
+<td>${booking.date || ""}</td>
 
-<td>${booking.time}</td>
+<td>${booking.time || ""}</td>
 
 <td>
 
-<span class="status ${booking.status.toLowerCase()}">
+<span class="status ${status.toLowerCase()}">
 
-${booking.status}
+${status}
 
 </span>
 
@@ -121,21 +128,24 @@ ${booking.status}
 
 <td>
 
-<button class="acceptBtn"
+<button
+class="acceptBtn"
 onclick="updateStatus('${bookingDoc.id}','Accepted')">
 
 Accept
 
 </button>
 
-<button class="rejectBtn"
+<button
+class="rejectBtn"
 onclick="updateStatus('${bookingDoc.id}','Rejected')">
 
 Reject
 
 </button>
 
-<button class="completeBtn"
+<button
+class="completeBtn"
 onclick="updateStatus('${bookingDoc.id}','Completed')">
 
 Complete
@@ -162,30 +172,33 @@ WhatsApp
 
     });
 
-}
+};
 
-bookingList.innerHTML=html;
+// ==========================================
+// UPDATE BOOKING STATUS
+// ==========================================
 
-}
+window.updateStatus = async function (id, status) {
 
-// ---------------------------
-// Update Booking Status
-// ---------------------------
+    await updateDoc(
+        doc(db, "bookings", id),
+        {
+            status: status
+        }
+    );
 
-window.updateStatus=async function(id,status){
+    alert("Booking updated successfully.");
 
-await updateDoc(doc(db,"bookings",id),{
+    await loadBookings();
 
-status:status
+    await updateDashboardStats();
 
-});
+};
+// ==========================================
+// DASHBOARD STATISTICS
+// ==========================================
 
-alert("Updated Successfully");
-
-loadBookings();
-
-}
-async function updateDashboardStats() {
+window.updateDashboardStats = async function () {
 
     const snapshot = await getDocs(collection(db, "bookings"));
 
@@ -195,11 +208,11 @@ async function updateDashboardStats() {
     let completed = 0;
     let rejected = 0;
 
-    snapshot.forEach((doc) => {
+    snapshot.forEach((bookingDoc) => {
 
         total++;
 
-        const booking = doc.data();
+        const booking = bookingDoc.data();
 
         switch (booking.status) {
 
@@ -219,6 +232,9 @@ async function updateDashboardStats() {
                 rejected++;
                 break;
 
+            default:
+                pending++;
+                break;
         }
 
     });
@@ -228,47 +244,16 @@ async function updateDashboardStats() {
     document.getElementById("acceptedBookings").textContent = accepted;
     document.getElementById("completedBookings").textContent = completed;
     document.getElementById("rejectedBookings").textContent = rejected;
-document.getElementById("searchBox")
-.addEventListener("keyup", filterBookings);
-document.getElementById("dateFilter")
-.addEventListener("change", filterBookings);
-}
-// ---------------------------
-// Complaints
-// ---------------------------
 
-window.loadComplaints=async function(){
+};
 
-const complaintList=document.getElementById("complaintList");
+// ==========================================
+// SEARCH BOOKINGS
+// ==========================================
 
-const snapshot=await getDocs(collection(db,"complaints"));
-
-let html="";
-
-snapshot.forEach((docData)=>{
-
-const c=docData.data();
-
-html+=`
-
-<div class="bookingCard">
-
-<p><b>Name:</b> ${c.name}</p>
-
-<p><b>Complaint:</b> ${c.complaint}</p>
-
-</div>
-
-`;
-
-});
-
-complaintList.innerHTML=html;
-
-}
 function filterBookings() {
 
-    const search = document
+    const searchText = document
         .getElementById("searchBox")
         .value
         .toLowerCase();
@@ -279,47 +264,119 @@ function filterBookings() {
 
     const rows = document.querySelectorAll("#bookingTable tr");
 
-    rows.forEach(row => {
+    rows.forEach((row) => {
 
-        const text = row.innerText.toLowerCase();
+        const rowText = row.innerText.toLowerCase();
 
         let show = true;
 
-        if (search !== "" && !text.includes(search))
+        if (searchText !== "" && !rowText.includes(searchText)) {
             show = false;
+        }
 
-        if (selectedDate !== "" && !text.includes(selectedDate))
+        if (selectedDate !== "" && !rowText.includes(selectedDate)) {
             show = false;
+        }
 
         row.style.display = show ? "" : "none";
 
     });
 
 }
-// ===============================
-// ADMIN LOGIN
-// ===============================
 
-window.adminLogin = function () {
+// ==========================================
+// SEARCH EVENTS
+// ==========================================
 
-    const username = document.getElementById("adminUsername").value.trim();
-    const password = document.getElementById("adminPassword").value.trim();
+document.addEventListener("DOMContentLoaded", () => {
 
-    if (username === "admin" && password === "1234") {
+    const searchBox = document.getElementById("searchBox");
+    const dateFilter = document.getElementById("dateFilter");
 
-        document.getElementById("adminLogin").style.display = "none";
+    if (searchBox) {
+        searchBox.addEventListener("keyup", filterBookings);
+    }
 
-        document.getElementById("adminDashboard").style.display = "flex";
+    if (dateFilter) {
+        dateFilter.addEventListener("change", filterBookings);
+    }
 
-        loadBookings();
-        loadComplaints();
-        updateDashboardStats();
+});
+// ==========================================
+// LOAD COMPLAINTS
+// ==========================================
 
-    } else {
+window.loadComplaints = async function () {
 
-        document.getElementById("loginError").innerHTML =
-            "❌ Invalid Username or Password";
+    const complaintList = document.getElementById("complaintList");
+
+    if (!complaintList) return;
+
+    complaintList.innerHTML = "";
+
+    try {
+
+        const snapshot = await getDocs(collection(db, "complaints"));
+
+        if (snapshot.empty) {
+
+            complaintList.innerHTML = `
+                <div class="bookingCard">
+                    <p>No complaints found.</p>
+                </div>
+            `;
+
+            return;
+        }
+
+        snapshot.forEach((complaintDoc) => {
+
+            const complaint = complaintDoc.data();
+
+            complaintList.innerHTML += `
+
+            <div class="bookingCard">
+
+                <h3>${complaint.name || "Customer"}</h3>
+
+                <p><strong>Mobile:</strong> ${complaint.mobile || "-"}</p>
+
+                <p><strong>Complaint:</strong></p>
+
+                <p>${complaint.complaint || "-"}</p>
+
+            </div>
+
+            `;
+
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        complaintList.innerHTML = `
+            <div class="bookingCard">
+                <p>Unable to load complaints.</p>
+            </div>
+        `;
 
     }
 
-}
+};
+
+// ==========================================
+// REFRESH DASHBOARD
+// ==========================================
+
+window.refreshDashboard = async function () {
+
+    await loadBookings();
+
+    await loadComplaints();
+
+    await updateDashboardStats();
+
+};
+
+console.log("✅ HomeCrew Admin Loaded Successfully");
