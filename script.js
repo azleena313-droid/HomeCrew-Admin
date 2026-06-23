@@ -228,7 +228,10 @@ async function updateDashboardStats() {
     document.getElementById("acceptedBookings").textContent = accepted;
     document.getElementById("completedBookings").textContent = completed;
     document.getElementById("rejectedBookings").textContent = rejected;
-
+document.getElementById("searchBox")
+.addEventListener("keyup", filterBookings);
+document.getElementById("dateFilter")
+.addEventListener("change", filterBookings);
 }
 // ---------------------------
 // Complaints
