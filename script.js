@@ -387,11 +387,10 @@ ${complaint.status || "Pending"}
 window.refreshDashboard = async function () {
 
     await loadBookings();
-
-    await loadComplaints();
-
-    await updateDashboardStats();
-
+await loadComplaints();
+await loadCustomers();
+await loadWorkers();
+await updateDashboardStats();
 };
 
 console.log("✅ HomeCrew Admin Loaded Successfully");
