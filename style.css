@@ -411,3 +411,34 @@ td{
 .status-busy {
     background: #dc2626;
 }
+/* =========================
+   COMPLAINT DASHBOARD
+========================= */
+
+.status.pending{
+background:#f59e0b;
+color:white;
+padding:4px 10px;
+border-radius:20px;
+}
+
+.status.resolved{
+background:#16a34a;
+color:white;
+padding:4px 10px;
+border-radius:20px;
+}
+
+.status.escalated{
+background:#dc2626;
+color:white;
+padding:4px 10px;
+border-radius:20px;
+}
+
+.status.inprogress{
+background:#2563eb;
+color:white;
+padding:4px 10px;
+border-radius:20px;
+}
