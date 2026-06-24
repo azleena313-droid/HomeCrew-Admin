@@ -38,6 +38,7 @@ window.adminLogin = async function () {
 
         await loadBookings();
         await loadComplaints();
+        await loadCustomers();
         await updateDashboardStats();
 
     } else {
@@ -380,3 +381,77 @@ window.refreshDashboard = async function () {
 };
 
 console.log("✅ HomeCrew Admin Loaded Successfully");
+// ===============================
+// LOAD CUSTOMERS
+// ===============================
+
+window.loadCustomers = async function () {
+
+    const customerTable =
+        document.getElementById("customerTable");
+
+    if (!customerTable) return;
+
+    customerTable.innerHTML = "";
+
+    const snapshot =
+        await getDocs(collection(db, "bookings"));
+
+    const customers = {};
+
+    snapshot.forEach((doc) => {
+
+        const booking = doc.data();
+
+        if (!customers[booking.mobile]) {
+
+            customers[booking.mobile] = {
+                name: booking.name,
+                mobile: booking.mobile,
+                bookings: 0
+            };
+
+        }
+
+        customers[booking.mobile].bookings++;
+
+    });
+
+    Object.values(customers).forEach((customer) => {
+
+        customerTable.innerHTML += `
+
+<tr>
+
+<td>${customer.name}</td>
+
+<td>${customer.mobile}</td>
+
+<td>${customer.bookings}</td>
+
+<td>
+
+<a href="tel:${customer.mobile}">
+<button class="acceptBtn">
+📞 Call
+</button>
+</a>
+
+<a href="https://wa.me/91${customer.mobile}"
+target="_blank">
+
+<button class="completeBtn">
+💬 WhatsApp
+</button>
+
+</a>
+
+</td>
+
+</tr>
+
+`;
+
+    });
+
+}
