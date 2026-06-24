@@ -395,6 +395,37 @@ window.refreshDashboard = async function () {
 };
 
 console.log("✅ HomeCrew Admin Loaded Successfully");
+// ==========================
+// DASHBOARD STATS
+// ==========================
+
+window.updateDashboardStats = async function() {
+
+const customers =
+await getDocs(collection(db,"customers"));
+
+const workers =
+await getDocs(collection(db,"workers"));
+
+const bookings =
+await getDocs(collection(db,"bookings"));
+
+const complaints =
+await getDocs(collection(db,"complaints"));
+
+document.getElementById("totalCustomers").textContent =
+customers.size;
+
+document.getElementById("totalWorkers").textContent =
+workers.size;
+
+document.getElementById("totalBookings").textContent =
+bookings.size;
+
+document.getElementById("totalComplaints").textContent =
+complaints.size;
+
+};
 // ===============================
 // LOAD CUSTOMERS
 // ===============================
