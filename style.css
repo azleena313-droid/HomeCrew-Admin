@@ -358,3 +358,56 @@ td{
 }
 
 }
+/* =========================
+   WORKERS MODULE
+========================= */
+
+.worker-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.worker-form input,
+.worker-form select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    min-width: 180px;
+}
+
+.worker-form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #2563eb;
+    color: white;
+    font-weight: 600;
+}
+
+.worker-form button:hover {
+    opacity: 0.9;
+}
+
+#workersTable td,
+#workersTable th {
+    padding: 10px;
+    text-align: left;
+}
+
+.worker-status {
+    padding: 4px 10px;
+    border-radius: 20px;
+    color: white;
+    font-size: 12px;
+}
+
+.status-available {
+    background: #16a34a;
+}
+
+.status-busy {
+    background: #dc2626;
+}
