@@ -6,10 +6,11 @@
 import { db } from "./firebase.js";
 
 import {
-    collection,
-    getDocs,
-    doc,
-    updateDoc
+collection,
+getDocs,
+doc,
+updateDoc,
+addDoc   
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // ==========================================
@@ -514,5 +515,41 @@ window.loadWorkers = async function () {
         `;
 
     });
+
+}
+window.addWorker = async function () {
+
+    const name =
+        document.getElementById("workerName").value.trim();
+
+    const mobile =
+        document.getElementById("workerMobile").value.trim();
+
+    const skill =
+        document.getElementById("workerSkill").value;
+
+    if (!name || !mobile || !skill) {
+
+        alert("Please fill all fields");
+
+        return;
+    }
+
+    await addDoc(collection(db, "workers"), {
+
+        name: name,
+        mobile: mobile,
+        skill: skill,
+        status: "Available"
+
+    });
+
+    alert("Worker Added Successfully");
+
+    document.getElementById("workerName").value = "";
+    document.getElementById("workerMobile").value = "";
+    document.getElementById("workerSkill").value = "";
+
+    loadWorkers();
 
 }
