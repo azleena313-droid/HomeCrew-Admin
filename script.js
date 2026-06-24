@@ -338,20 +338,31 @@ window.loadComplaints = async function () {
             const complaint = complaintDoc.data();
 
             complaintList.innerHTML += `
+<div class="bookingCard">
 
-            <div class="bookingCard">
+<h3>${complaint.name || "Customer"}</h3>
 
-                <h3>${complaint.name || "Customer"}</h3>
+<p><strong>Mobile:</strong> ${complaint.mobile || "-"}</p>
 
-                <p><strong>Mobile:</strong> ${complaint.mobile || "-"}</p>
+<p><strong>Complaint:</strong></p>
 
-                <p><strong>Complaint:</strong></p>
+<p>${complaint.complaint || "-"}</p>
 
-                <p>${complaint.complaint || "-"}</p>
+<p>
+<strong>Status:</strong>
+${complaint.status || "Pending"}
+</p>
 
-            </div>
+<button onclick="resolveComplaint('${complaintDoc.id}')">
+✅ Resolve
+</button>
 
-            `;
+<button onclick="deleteComplaint('${complaintDoc.id}')">
+🗑 Delete
+</button>
+
+</div>
+`;
 
         });
 
@@ -578,3 +589,26 @@ window.deleteWorker = async function(id){
     loadWorkers();
 
 }
+window.resolveComplaint = async function(id) {
+
+await updateDoc(doc(db, "complaints", id), {
+    status: "Resolved"
+});
+
+alert("Complaint Resolved");
+
+loadComplaints();
+
+};
+
+window.deleteComplaint = async function(id) {
+
+if (!confirm("Delete this complaint?")) return;
+
+await deleteDoc(doc(db, "complaints", id));
+
+alert("Complaint Deleted");
+
+loadComplaints();
+
+};
