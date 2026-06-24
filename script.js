@@ -10,7 +10,8 @@ collection,
 getDocs,
 doc,
 updateDoc,
-addDoc   
+addDoc,
+deleteDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // ==========================================
@@ -495,20 +496,28 @@ window.loadWorkers = async function () {
 
         <td>
 
-        <a href="tel:${worker.mobile}">
-        <button class="acceptBtn">
-        📞 Call
-        </button>
-        </a>
+<a href="tel:${worker.mobile}">
+<button class="acceptBtn">
+📞 Call
+</button>
+</a>
 
-        <a href="https://wa.me/91${worker.mobile}"
-        target="_blank">
-        <button class="completeBtn">
-        💬 WhatsApp
-        </button>
-        </a>
+<a href="https://wa.me/91${worker.mobile}"
+target="_blank">
+<button class="completeBtn">
+💬 WhatsApp
+</button>
+</a>
 
-        </td>
+<button
+class="rejectBtn"
+onclick="deleteWorker('${workerDoc.id}')">
+
+🗑 Delete
+
+</button>
+
+</td>
 
         </tr>
 
@@ -549,6 +558,22 @@ window.addWorker = async function () {
     document.getElementById("workerName").value = "";
     document.getElementById("workerMobile").value = "";
     document.getElementById("workerSkill").value = "";
+
+    loadWorkers();
+
+}
+window.deleteWorker = async function(id){
+
+    const confirmDelete =
+        confirm("Delete this worker?");
+
+    if(!confirmDelete) return;
+
+    await deleteDoc(
+        doc(db,"workers",id)
+    );
+
+    alert("Worker Deleted");
 
     loadWorkers();
 
