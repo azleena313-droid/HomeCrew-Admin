@@ -39,6 +39,7 @@ window.adminLogin = async function () {
         await loadBookings();
         await loadComplaints();
         await loadCustomers();
+        await loadWorkers();
         await updateDashboardStats();
 
     } else {
@@ -451,6 +452,66 @@ target="_blank">
 </tr>
 
 `;
+
+    });
+
+}
+// =====================================
+// WORKERS MODULE
+// =====================================
+
+window.loadWorkers = async function () {
+
+    const table =
+        document.getElementById("workersTable");
+
+    if (!table) return;
+
+    table.innerHTML = "";
+
+    const snapshot =
+        await getDocs(collection(db, "workers"));
+
+    snapshot.forEach((workerDoc) => {
+
+        const worker = workerDoc.data();
+
+        table.innerHTML += `
+
+        <tr>
+
+        <td>${worker.name || "-"}</td>
+
+        <td>${worker.mobile || "-"}</td>
+
+        <td>${worker.skill || "-"}</td>
+
+        <td>
+        <span class="status accepted">
+        ${worker.status || "Available"}
+        </span>
+        </td>
+
+        <td>
+
+        <a href="tel:${worker.mobile}">
+        <button class="acceptBtn">
+        📞 Call
+        </button>
+        </a>
+
+        <a href="https://wa.me/91${worker.mobile}"
+        target="_blank">
+        <button class="completeBtn">
+        💬 WhatsApp
+        </button>
+        </a>
+
+        </td>
+
+        </tr>
+
+        `;
 
     });
 
