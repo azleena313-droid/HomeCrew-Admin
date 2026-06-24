@@ -79,8 +79,9 @@ window.onload = async function () {
 
         await loadBookings();
         await loadComplaints();
+        await loadCustomers();
+        await loadWorkers();
         await updateDashboardStats();
-
     }
 
 };
